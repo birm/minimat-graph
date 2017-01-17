@@ -81,7 +81,7 @@ class MMGraph{
           float_filter = function(val) { return (!(isNaN(val)||val==Infinity||val==-Infinity))};
           var filtered = Mat.data.filter(float_filter);
           // draw the value on the square in field
-          var color = scale_colorlin_scale(Mat.data[x]), "redgreen";
+          var color = scale_color(lin_scale(Mat.data[x]), "redgreen");
           // special case for nan, as missing data
       }
   }
