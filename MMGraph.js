@@ -28,7 +28,7 @@ class MMGraph{
       if (isNaN(val) || val==Infinity || val==-Infinity){
           return NaN;
       }
-      return (val - Math.min.apply(Math, filtered))/(Math.max.apply(Math, filtered) - Math.min.apply(Math, filtered);
+      return (val - Math.min.apply(Math, filtered))/(Math.max.apply(Math, filtered) - Math.min.apply(Math, filtered));
   };
 
   static scale_color(value, scheme="redgreen"){
