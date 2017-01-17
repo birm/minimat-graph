@@ -1,0 +1,35 @@
+{
+  "name": "minimat-graph",
+  "version": "0.0.1",
+  "description": "Graphing extension library for the MiniMat type",
+  "main": "MMGraph.js",
+  "dependencies": {
+    "minimat" : "latest"
+  },
+  "devDependencies": {
+    "tape" : "latest"
+  },
+  "scripts": {
+    "test": "node tests.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/birm/minimat-graph.git"
+  },
+  "keywords": [
+    "math",
+    "matrix",
+    "linear",
+    "plot",
+    "graph",
+    "draw",
+    "visualize",
+    "chart"
+  ],
+  "author": "Ryan Birmingham",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/birm/minimat-graph/issues"
+  },
+  "homepage": "https://github.com/birm/minimat-graph#readme"
+}
