@@ -10,17 +10,20 @@ d3 = require("d3");
 
 // canvas creation tool outside of class
 function make_canvas(tag, x_len, y_len, drawsize=[400,400], put=true){
-  // take in the tag(id) to put the drawing at, the matrix dimensions, and the drawing dimension in pixels.
+  // take in a tag(id) to put the drawing at, the matrix dimensions, and the drawing dimension in pixels.
   // if tag doesn't start with "#", add it
   if (!(tag[0] === "#")){
     tag = tag + "#";
   }
+
   x_len = = parseInt(x_len,10);
   y_len = = parseInt(y_len,10);
-  // make a web object we can draw to of size drawsize
   var drawx = parseInt(drawsize[0],10);
   var drawy = parseInt(drawsize[1],10);
-  var canvas = d3.select(tag);
+
+  // actually add the canvas div
+  var canvas = d3.select("body").append("svg").attr("id", tag).attr("width", drawx).attr("height", drawy);
+
   // put in the (empty) elements within
   var eachx = drawx/x_len;
   var eachy = drawy/y_len;
