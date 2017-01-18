@@ -4,7 +4,8 @@
   "description": "Graphing extension library for the MiniMat type",
   "main": "MMGraph.js",
   "dependencies": {
-    "minimat" : "latest"
+    "minimat" : "latest",
+    "d3" : "latest"
   },
   "devDependencies": {
     "tape" : "latest"
