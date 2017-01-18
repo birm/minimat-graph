@@ -6,20 +6,36 @@
  */
 
 MiniMat = require("minimat");
+d3 = require("d3");
 
 // canvas creation tool outside of class
-function make_canvas(position, x_len, y_len){
-  // make a web object we can draw to.
-  // return the tag used
-  return "mmgraph-"+position;
+function make_canvas(tag, x_len, y_len, drawsize=[400,400], put=true){
+  // take in the tag(id) to put the drawing at, the matrix dimensions, and the drawing dimension in pixels.
+  // if tag doesn't start with "#", add it
+  if (!(tag[0] === "#")){
+    tag = tag + "#";
+  }
+  x_len = = parseInt(x_len,10);
+  y_len = = parseInt(y_len,10);
+  // make a web object we can draw to of size drawsize
+  var drawx = parseInt(drawsize[0],10);
+  var drawy = parseInt(drawsize[1],10);
+  var canvas = d3.select(tag);
+  // put in the (empty) elements within
+  var eachx = drawx/x_len;
+  var eachy = drawy/y_len;
+
+
+  // return the canvas
+  return canvas;
 }
 
 class MMGraph{
-  constuctor(Mat, position=0){
+  constuctor(Mat, tag="#matgraph"){
     this.Mat = Mat;
-    this.position = position;
-    // initializes a new stage to draw on
-    make_canvas(position, Mat.x_len, Mat.y_len);
+    this.tag = tag;
+    // initializes a new canvas to draw on
+    this.canvas = make_canvas(tag, Mat.x_len, Mat.y_len);
   }
 
   static lin_scale(val){
