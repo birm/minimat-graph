@@ -1,5 +1,5 @@
 /**
- *  @fileoverview Dimensionality reduction library for javascript.
+ *  @fileoverview Matrix graphing library for javascript.
  *  @author birm@rbirm.us (Ryan Birmingham)
  *  @license Copyright 2017 Ryan Birmingham.
  *  Licensed under GPL-3.
@@ -19,8 +19,7 @@ class MMGraph{
     this.Mat = Mat;
     this.position = position;
     // initializes a new stage to draw on
-
-
+    make_canvas(position, Mat.x_len, Mat.y_len);
   }
 
   static lin_scale(val){
@@ -29,7 +28,7 @@ class MMGraph{
           return NaN;
       }
       return (val - Math.min.apply(Math, filtered))/(Math.max.apply(Math, filtered) - Math.min.apply(Math, filtered));
-  };
+  }
 
   static scale_color(value, scheme="redgreen"){
       // change depending on scheme
@@ -55,21 +54,21 @@ class MMGraph{
               return [197, 0.11, (0.28*value+11), 0.9];
           case "rainbow":
               // change hue for rainbow
-              return [(242*value), 0.84, 0.48, 0.9]
+              return [(242*value), 0.84, 0.48, 0.9];
           case "redgreen":
               // split at 0.5, red less, green higher
               if (value > 0.5){
-                  return [350, 1, 0.5+(0.5-value), 0.9]
+                  return [350, 1, 0.5+(0.5-value), 0.9];
               } else {
-                  return [11, 1, 0.2+(0.4*value), 0.98]
+                  return [11, 1, 0.2+(0.4*value), 0.98];
               }
           default:
-              // same as redgreen; kept because want to switch later
+              // same as redgreen, kept because want to switch later
               // split at 0.5, red less, green higher
               if (value > 0.5){
-                  return [350, 1, 0.5+(0.5-value), 0.9]
+                  return [350, 1, 0.5+(0.5-value), 0.9];
               } else {
-                  return [11, 1, 0.2+(0.4*value), 0.98]
+                  return [11, 1, 0.2+(0.4*value), 0.98];
               }
       }
   }
