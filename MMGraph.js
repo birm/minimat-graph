@@ -93,16 +93,15 @@ class MMGraph{
       // draw the Mat to this.tag given, already initalized
       // a function to get the x,y position given coord
       var get_elem_pos = function(pos, x_len){
-        return [(floor(x/x_len))*this.eachx, (x%x_len)*this.eachy]
+        return [(floor(x/x_len))*this.eachx, (x%x_len)*this.eachy];
       }
+      var float_filter = function(val) { return (!(isNaN(val)||val==Infinity||val==-Infinity))};
       for (var x=0; x< Mat.data.length; x++){
           // for each one, get the element's position
           var coords = get_elem_pos(x, Mat.x_len);
-          float_filter = function(val) { return (!(isNaN(val)||val==Infinity||val==-Infinity))};
           var filtered = Mat.data.filter(float_filter);
           // draw the value on the square in field
           var color = scale_color(lin_scale(Mat.data[x]), "redgreen");
-          // special case for nan, as missing data
       }
   }
 }
