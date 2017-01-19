@@ -9,7 +9,7 @@ MiniMat = require("minimat");
 d3 = require("d3");
 
 // canvas creation tool outside of class
-function make_canvas(tag, x_len, y_len, drawsize=[400,400], put=true){
+function make_canvas(tag, x_len, y_len, drawsize, put=true){
   // take in a tag(id) to put the drawing at, the matrix dimensions, and the drawing dimension in pixels.
   // if tag doesn't start with "#", add it
   if (!(tag[0] === "#")){
@@ -24,21 +24,18 @@ function make_canvas(tag, x_len, y_len, drawsize=[400,400], put=true){
   // actually add the canvas div
   var canvas = d3.select("body").append("svg").attr("id", tag).attr("width", drawx).attr("height", drawy);
 
-  // put in the (empty) elements within
-  var eachx = drawx/x_len;
-  var eachy = drawy/y_len;
-
-
   // return the canvas
   return canvas;
 }
 
 class MMGraph{
-  constuctor(Mat, tag="#matgraph"){
+  constuctor(Mat, tag="#matgraph", drawsize=[400,400]){
     this.Mat = Mat;
     this.tag = tag;
     // initializes a new canvas to draw on
-    this.canvas = make_canvas(tag, Mat.x_len, Mat.y_len);
+    this.canvas = make_canvas(tag, Mat.x_len, Mat.y_len, drawsize);
+    this.eachx = parseInt(drawsize[0],10)/x_len;
+    this.eachy = parseInt(drawsize[1],10)/y_len;
   }
 
   static lin_scale(val){
@@ -94,8 +91,13 @@ class MMGraph{
 
   draw(Mat) {
       // draw the Mat to this.tag given, already initalized
+      // a function to get the x,y position given coord
+      var get_elem_pos = function(pos, x_len){
+        return [(floor(x/x_len))*this.eachx, (x%x_len)*this.eachy]
+      }
       for (var x=0; x< Mat.data.length; x++){
-
+          // for each one, get the element's position
+          var coords = get_elem_pos(x, Mat.x_len);
           float_filter = function(val) { return (!(isNaN(val)||val==Infinity||val==-Infinity))};
           var filtered = Mat.data.filter(float_filter);
           // draw the value on the square in field
