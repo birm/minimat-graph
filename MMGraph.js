@@ -21,7 +21,7 @@ function make_canvas(tag, x_len, y_len, drawsize){
   var drawx = parseInt(drawsize*x_len, 10);
   var drawy = parseInt(drawsize*y_len, 10);
 
-  // actually add the canvas div
+  // add the canvas to the page
   var canvas = d3.select("body").append("svg").attr("id", tag).attr("width", drawx).attr("height", drawy);
 
   // return the canvas
@@ -35,17 +35,18 @@ class MMGraph{
     // and the drawing size of each element in pixels.
     this.Mat = Mat;
     this.tag = tag;
+
     // initializes a new canvas to draw on
     this.canvas = make_canvas(tag, Mat.x_len, Mat.y_len, drawsize);
     this.drawsize = drawsize;
   }
 
-  static lin_scale(val){
+  static lin_scale(val, min, max){
       // linear color scale function (from 0 to 1)
       if (isNaN(val) || val==Infinity || val==-Infinity){
           return NaN;
       }
-      return (val - Math.min.apply(Math, filtered))/(Math.max.apply(Math, filtered) - Math.min.apply(Math, filtered));
+      return (val - min)/(max - min);
   }
 
   static scale_color(value, scheme="redgreen"){
@@ -63,6 +64,7 @@ class MMGraph{
       } else if (value<0){
           value=0;
       }
+
       switch(scheme){
           case "blue":
               //change sauration and alpha value of blue-like
@@ -98,12 +100,16 @@ class MMGraph{
         return [(Math.floor(x/x_len))*this.drawsize, (x%x_len)*this.drawsize];
       }
       var float_filter = function(val) { return (!(isNaN(val)||val==Infinity||val==-Infinity))};
+      // filter and get range for min and max of normal data
+      var filtered = Mat.data.filter(float_filter);
+      var data_range = [Math.min.apply(Math, filtered), Math.max.apply(Math, filtered))];
+
+      // draw each element in the matrix
       for (var x=0; x< Mat.data.length; x++){
           // for each one, get the element's position
           var coords = get_elem_pos(x, Mat.x_len);
-          var filtered = Mat.data.filter(float_filter);
-          // draw the value on the square in field
-          var color = scale_color(lin_scale(Mat.data[x]), "redgreen");
+          // get the color for the value
+          var color = scale_color(lin_scale(Mat.data[x], data_range[0], data_range[1]), "redgreen");
       }
   }
 }
