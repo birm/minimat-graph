@@ -29,7 +29,7 @@ function make_canvas(tag, x_len, y_len, drawsize){
 }
 
 class MMGraph{
-  constuctor(Mat, tag="#matgraph", drawsize=){
+  constuctor(Mat, tag="#matgraph", drawsize=5){
     // take in a matrix to draw,
     // a tag to create the chart as (or update)
     // and the drawing size of each element in pixels.
