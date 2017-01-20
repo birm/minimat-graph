@@ -147,8 +147,8 @@ class MMGraph{
             .attr("height", this.drawsize)
             .attr("x", coords[0])
             .attr("y", coords[1])
-            .attr("id", this.tag+"- "str(x))
-            .attr("style", "fill:"+color+";");
+            .attr("id", this.tag + "- " + str(x))
+            .attr("style", "fill:" + color + ";");
       }
   }
 }
