@@ -95,7 +95,7 @@ class MMGraph{
       // draw the Mat to this.tag given, already initalized
       // a function to get the x,y position given coord
       var get_elem_pos = function(pos, x_len){
-        return [(Math.floor(x/x_len))*this.eachx, (x%x_len)*this.eachy];
+        return [(Math.floor(x/x_len))*this.drawsize, (x%x_len)*this.drawsize];
       }
       var float_filter = function(val) { return (!(isNaN(val)||val==Infinity||val==-Infinity))};
       for (var x=0; x< Mat.data.length; x++){
