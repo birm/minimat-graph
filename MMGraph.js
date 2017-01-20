@@ -47,7 +47,7 @@ class MMGraph{
 
   static lin_scale(val, min, max){
       // linear color scale function (from 0 to 1)
-      if (isNaN(val) || val==Infinity || val==-Infinity){
+      if (isNaN(val) || val === Infinity || val === -Infinity){
           return NaN;
       }
       return (val - min)/(max - min);
@@ -113,10 +113,11 @@ class MMGraph{
       switch(color[0].toLowerCase()){
           case "hsla":
               // expect 4 other elements, 1 is ok, 2,3,4 to % form
-              color_str = "hsla("+str(parseInt(color[1],10))+","
-                  + str(parseInt(color[2]*100,10))+"%"+","
-                  + str(parseInt(color[3]*100,10))+"%"+","
-                  + str(parseInt(color[4]*100,10))+"%"+")"
+              color_str = "hsla("+str(parseInt(color[1],10))+"," +
+                  str(parseInt(color[2]*100,10))+"%"+"," +
+                  str(parseInt(color[3]*100,10))+"%"+"," +
+                  str(parseInt(color[4]*100,10))+"%"+")";
+              break;
           default:
               // not an array, but a string of preformmated color, hopefully
               color_str = color;
@@ -130,7 +131,7 @@ class MMGraph{
       var get_elem_pos = function(pos, x_len){
         return [(Math.floor(x/x_len))*this.drawsize, (x%x_len)*this.drawsize];
       }
-      var float_filter = function(val) { return (!(isNaN(val)||val==Infinity||val==-Infinity))};
+      var float_filter = function(val) { return (!(isNaN(val)||val === Infinity||val === -Infinity))};
       // filter and get range for min and max of normal data
       var filtered = Mat.data.filter(float_filter);
       var data_range = [Math.min.apply(Math, filtered), Math.max.apply(Math, filtered)];
