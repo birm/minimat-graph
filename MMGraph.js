@@ -9,17 +9,17 @@ MiniMat = require("minimat");
 d3 = require("d3");
 
 // canvas creation tool outside of class
-function make_canvas(tag, x_len, y_len, drawsize, put=true){
-  // take in a tag(id) to put the drawing at, the matrix dimensions, and the drawing dimension in pixels.
+function make_canvas(tag, x_len, y_len, drawsize){
+  // take in a tag(id) to put the drawing at, the matrix dimensions,
+  // and the drawing size of each element in pixels.
   // if tag doesn't start with "#", add it
   if (!(tag[0] === "#")){
     tag = tag + "#";
   }
 
-  x_len = = parseInt(x_len,10);
-  y_len = = parseInt(y_len,10);
-  var drawx = parseInt(drawsize[0],10);
-  var drawy = parseInt(drawsize[1],10);
+  // figure out how big to draw the whole plot
+  var drawx = parseInt(drawsize*x_len, 10);
+  var drawy = parseInt(drawsize*y_len, 10);
 
   // actually add the canvas div
   var canvas = d3.select("body").append("svg").attr("id", tag).attr("width", drawx).attr("height", drawy);
@@ -29,13 +29,15 @@ function make_canvas(tag, x_len, y_len, drawsize, put=true){
 }
 
 class MMGraph{
-  constuctor(Mat, tag="#matgraph", drawsize=[400,400]){
+  constuctor(Mat, tag="#matgraph", drawsize=){
+    // take in a matrix to draw,
+    // a tag to create the chart as (or update)
+    // and the drawing size of each element in pixels.
     this.Mat = Mat;
     this.tag = tag;
     // initializes a new canvas to draw on
     this.canvas = make_canvas(tag, Mat.x_len, Mat.y_len, drawsize);
-    this.eachx = parseInt(drawsize[0],10)/x_len;
-    this.eachy = parseInt(drawsize[1],10)/y_len;
+    this.drawsize = drawsize;
   }
 
   static lin_scale(val){
@@ -105,5 +107,8 @@ class MMGraph{
       }
   }
 }
+
+// try to add make_canvas to the class
+MMGraph.prototype.make_canvas = make_canvas;
 
 module.exports = MMGraph;
