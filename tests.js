@@ -1,8 +1,8 @@
-/**
+
 var test = require('tape');
 var MiniMat = require("minimat");
 var MiniMat = require("./MMGraph");
-
+/**
 // test color scales
 
 
