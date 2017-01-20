@@ -22,7 +22,11 @@ function make_canvas(tag, x_len, y_len, drawsize){
   var drawy = parseInt(drawsize*y_len, 10);
 
   // add the canvas to the page
-  var canvas = d3.select("body").append("svg").attr("id", tag).attr("width", drawx).attr("height", drawy);
+  var canvas = d3.select("body")
+    .append("svg")
+    .attr("id", tag)
+    .attr("width", drawx)
+    .attr("height", drawy);
 
   // return the canvas
   return canvas;
@@ -49,13 +53,51 @@ class MMGraph{
       return (val - min)/(max - min);
   }
 
-  static scale_color(value, scheme="redgreen"){
-      // change depending on scheme
-      // expects value between 0 and 1
-      // return a hsla set in oder [hue, sat, luminence, alpha]
-      // hue from 0 to 360, rest 0 to 1
+  // some plot color scheme engines
+  // all appended _gc for graph coloring
 
-      // deal with bad  values now so we don't mess up color
+  //HSLA style schemes
+  // expect values between 0 and 1
+  // return a hsla set in oder ['hsla', hue, sat, luminence, alpha]
+  // hue from 0 to 360, rest 0 to 1
+
+  static blue_gc(value){
+      //change sauration and alpha value of blue-like
+      return ["hsla", 249, (value*0.8+0.2), 255, (value/3+0.65)];
+  }
+
+  static grey_gc(value){
+      //keep in a greyscale range
+      return ["hsla", 197, 0.11, (0.28*value+11), 0.9];
+  }
+
+
+  static gray_gc(value){
+      // alias to grey
+      //keep in a greyscale range
+      MMGraph.grey_gc(value);
+  }
+
+  static rainbow_gc(value){
+      // change hue for rainbow
+      return ["hsla", (242*value), 0.84, 0.48, 0.9];
+  }
+
+  static redgreen_gc(value){
+      // split at 0.5, red less, green higher
+      var color;
+      if (value > 0.5){
+          color = ["hsla", 350, 1, 0.5+(0.5-value), 0.9];
+      } else {
+          color = ["hsla", 11, 1, 0.2+(0.4*value), 0.98];
+      }
+      return color;
+  }
+
+
+  static scale_color(value, scheme=MMGraph.redgreen_gc){
+      // get a color from a normalized value (between 0 and 1)
+      // deal with bad values now so we don't mess up color
       if (isNaN(value)){
           // don't color in missing data
           return [0,0,0,0];
@@ -64,33 +106,22 @@ class MMGraph{
       } else if (value<0){
           value=0;
       }
-
-      switch(scheme){
-          case "blue":
-              //change sauration and alpha value of blue-like
-              return [249, (value*0.8+0.2), 255, (value/3+0.65)];
-          case "grey":
-              //keep in a greyscale range
-              return [197, 0.11, (0.28*value+11), 0.9];
-          case "rainbow":
-              // change hue for rainbow
-              return [(242*value), 0.84, 0.48, 0.9];
-          case "redgreen":
-              // split at 0.5, red less, green higher
-              if (value > 0.5){
-                  return [350, 1, 0.5+(0.5-value), 0.9];
-              } else {
-                  return [11, 1, 0.2+(0.4*value), 0.98];
-              }
+      // get the color
+      var color = scheme(value);
+      var color_str;
+      // parse the string
+      switch(color[0].toLowerCase()){
+          case "hsla":
+              // expect 4 other elements, 1 is ok, 2,3,4 to % form
+              color_str = "hsla("+str(parseInt(color[1],10))+","
+                  + str(parseInt(color[2]*100,10))+"%"+","
+                  + str(parseInt(color[3]*100,10))+"%"+","
+                  + str(parseInt(color[4]*100,10))+"%"+")"
           default:
-              // same as redgreen, kept because want to switch later
-              // split at 0.5, red less, green higher
-              if (value > 0.5){
-                  return [350, 1, 0.5+(0.5-value), 0.9];
-              } else {
-                  return [11, 1, 0.2+(0.4*value), 0.98];
-              }
+              // not an array, but a string of preformmated color, hopefully
+              color_str = color;
       }
+      return color_str;
   }
 
   draw(Mat) {
@@ -110,6 +141,14 @@ class MMGraph{
           var coords = get_elem_pos(x, Mat.x_len);
           // get the color for the value
           var color = scale_color(lin_scale(Mat.data[x], data_range[0], data_range[1]), "redgreen");
+          // add the node
+          this.canvas.append("rect")
+            .attr("width", this.drawsize)
+            .attr("height", this.drawsize)
+            .attr("x", coords[0])
+            .attr("y", coords[1])
+            .attr("id", this.tag+"- "str(x))
+            .attr("style", "fill:"+color+";");
       }
   }
 }
