@@ -133,7 +133,7 @@ class MMGraph{
       var float_filter = function(val) { return (!(isNaN(val)||val==Infinity||val==-Infinity))};
       // filter and get range for min and max of normal data
       var filtered = Mat.data.filter(float_filter);
-      var data_range = [Math.min.apply(Math, filtered), Math.max.apply(Math, filtered))];
+      var data_range = [Math.min.apply(Math, filtered), Math.max.apply(Math, filtered)];
 
       // draw each element in the matrix
       for (var x=0; x< Mat.data.length; x++){
