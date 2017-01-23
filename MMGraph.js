@@ -113,10 +113,10 @@ class MMGraph{
       switch(color[0].toLowerCase()){
           case "hsla":
               // expect 4 other elements, 1 is ok, 2,3,4 to % form
-              color_str = "hsla("+str(parseInt(color[1],10))+"," +
-                  str(parseInt(color[2]*100,10))+"%"+"," +
-                  str(parseInt(color[3]*100,10))+"%"+"," +
-                  str(parseInt(color[4]*100,10))+"%"+")";
+              color_str = "hsla("+String(parseInt(color[1],10))+"," +
+                  String(parseInt(color[2]*100,10))+"%"+"," +
+                  String(parseInt(color[3]*100,10))+"%"+"," +
+                  String(parseInt(color[4]*100,10))+"%"+")";
               break;
           default:
               // not an array, but a string of preformmated color, hopefully
@@ -148,7 +148,7 @@ class MMGraph{
             .attr("height", this.drawsize)
             .attr("x", coords[0])
             .attr("y", coords[1])
-            .attr("id", this.tag + "- " + str(x))
+            .attr("id", this.tag + "- " + String(x))
             .attr("style", "fill:" + color + ";");
       }
   }

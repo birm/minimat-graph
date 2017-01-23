@@ -1,27 +1,24 @@
 
 var test = require('tape');
 var MiniMat = require("minimat");
-var MiniMat = require("./MMGraph");
-/**
-// test color scales
+var MMGraph = require("./MMGraph");
+
+// test itialization
+test( 'graph object test', function(t) {
+    t.plan(1);
 
 
+    t.doesNotThrow( function() {
+        onetwothreefour = new MMGraph(new MiniMat([1,2,3,4], 2, 2));
+    }, '*', "new MMGraph() construction");
+});
+
+// test color scaler
 test( 'color scale test', function(t) {
     t.plan(1);
 
 
     t.doesNotThrow( function() {
-        onetwothreefour = new MiniMat([1,2,3,4], 2, 2);
-    }, '*', "new MiniMat() construction");
+        MMGraph.scale_color(0.5);
+    }, '*', "test color scale function");
 });
-
-// test helpers
-test( 'graph helper test', function(t) {
-    t.plan(1);
-
-
-    t.doesNotThrow( function() {
-        onetwothreefour = new MiniMat([1,2,3,4], 2, 2);
-    }, '*', "new MiniMat() construction");
-});
-**/
