@@ -1,7 +1,7 @@
 
 var test = require('tape');
 var MiniMat = require("minimat");
-var MiniMat = require("./MMGraph");
+var MMGraph = require("./MMGraph");
 
 // test itialization
 test( 'graph object test', function(t) {
