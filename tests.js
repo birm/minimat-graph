@@ -12,7 +12,6 @@ test( 'graph object test', function(t) {
         onetwothreefour = new MMGraph(new MiniMat([1,2,3,4], 2, 2));
     }, '*', "new MMGraph() construction");
 });
-**/
 
 // test color scaler
 test( 'color scale test', function(t) {
