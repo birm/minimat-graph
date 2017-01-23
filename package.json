@@ -1,6 +1,6 @@
 {
   "name": "minimat-graph",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Graphing extension library for the MiniMat type",
   "main": "MMGraph.js",
   "dependencies": {
