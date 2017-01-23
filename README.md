@@ -5,3 +5,9 @@
 
 
 Graphing extension library for the MiniMat type
+
+Live releases [on npm here](https://www.npmjs.com/package/minimat-graph)
+
+Github dev page [here](https://github.com/birm/minimat-graph)
+
+Documentation [here](http://www.rbirm.us/minimat-graph/)
